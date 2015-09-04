@@ -2,13 +2,26 @@
   $.TweetCompose = function (el) {
     this.$el = $(el);
     this.$feed = $(this.$el.data("tweets-ul"))
-    this.$el.on("submit", this.submit.bind(this));
-
     this.$charsLeft = this.$el.find(".chars-left");
+    this.$textarea = this.$el.find("textarea");
+
     this.$charsLeft.text(140);
 
-    this.$textarea = this.$el.find("textarea");
+    this.$el.on("submit", this.submit.bind(this));
     this.$textarea.on("input", this.counter.bind(this));
+    this.$el.on("click", "a.add-mentioned-user", this.addMentionedUser.bind(this));
+    this.$el.on("click", "a.remove-mentioned-user", this.removeMentionedUser.bind(this));
+  };
+
+  $.TweetCompose.prototype.removeMentionedUser = function (e) {
+    var $linkClicked = $(e.currentTarget);
+    var $parentDiv = $linkClicked.parent();
+    $parentDiv.remove();
+  };
+
+  $.TweetCompose.prototype.addMentionedUser = function (e) {
+    var html = this.$el.find(".user-selection").html();
+    this.$el.find(".mentioned-users").append(html);
   };
 
   $.TweetCompose.prototype.counter = function (e) {
@@ -50,6 +63,7 @@
       }
     });
 
+    this.$el.find(".mentioned-users").empty();
     this.$charsLeft.text(140);
   };
 
