@@ -26,6 +26,10 @@
 <% end %>
 
 <%= yield %>
-
+<script>
+  (function () {
+    $("button.follow-toggle").followToggle();
+  })();
+</script>
 </body>
 </html>
