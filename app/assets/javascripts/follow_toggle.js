@@ -1,4 +1,3 @@
-
 (function () {
   $.FollowToggle = function (el) {
     this.$el = $(el);
@@ -62,3 +61,7 @@
     });
   };
 })();
+
+$(function () {
+  $("button.follow-toggle").followToggle();
+});
