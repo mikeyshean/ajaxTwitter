@@ -3,10 +3,23 @@
     this.$el = $(el);
     this.$feed = $(this.$el.data("tweets-ul"))
     this.$el.on("submit", this.submit.bind(this));
+
+    this.$charsLeft = this.$el.find(".chars-left");
+    this.$charsLeft.text(140);
+
+    this.$textarea = this.$el.find("textarea");
+    this.$textarea.on("input", this.counter.bind(this));
   };
 
+  $.TweetCompose.prototype.counter = function (e) {
+    var input = this.$textarea.val();
+
+    var currentLength = input.length;
+    this.$charsLeft.text(140 - currentLength);
+  }
+
   $.TweetCompose.prototype.submit = function (e) {
-    // var params = $.
+
     e.preventDefault();
     var inputs = $(e.currentTarget).find(":input").serializeJSON();
     this.$el.find(":input").prop("disabled", true);
@@ -26,10 +39,19 @@
     var $li = $("<li>" + JSON.stringify(tweet) + "</li>")
     this.$feed.prepend($li);
     this.clearInput();
+    this.$el.find(":input").prop("disabled", false);
   };
 
   $.TweetCompose.prototype.clearInput = function () {
-    this.$el.find(":input").val("")
+    var inputs = this.$el.find(":input")
+    inputs.each(function () {
+      if (this.type !== "submit") {
+        console.log(this.type);
+        $(this).val("");
+      }
+    });
+
+    this.$charsLeft.text(140);
   };
 
   $.fn.tweetCompose = function () {
@@ -37,6 +59,7 @@
       new $.TweetCompose(this);
     });
   };
+  
 })();
 
 $(function() {
