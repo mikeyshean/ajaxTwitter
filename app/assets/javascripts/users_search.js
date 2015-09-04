@@ -26,10 +26,18 @@
   $.UsersSearch.prototype.renderResults = function(response) {
     this.$users.empty();
     response.forEach(function (user) {
+      // console.log(user);
       var userId = user.id;
       var userName = user.username;
+      var followState = user.followed ? "followed" : "unfollowed"
+
+      var options = {userId: userId, followState: followState}
+
       var href = "/users/" + userId;
-      var $li = $("<li><a href=\"" + href + "\">" + user.username + "</a></li>");
+      var $li = $("<li><a href=\"" + href + "\">" + userName + "</a></li>");
+      var $button = $("<button class=\"follow-toggle\"></button>");
+
+      $li.append($button.followToggle(options));
 
       this.$users.append($li);
     }.bind(this));
