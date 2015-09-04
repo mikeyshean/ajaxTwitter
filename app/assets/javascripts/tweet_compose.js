@@ -21,7 +21,7 @@
   $.TweetCompose.prototype.submit = function (e) {
 
     e.preventDefault();
-    var inputs = $(e.currentTarget).find(":input").serializeJSON();
+    var inputs = $(e.currentTarget).serializeJSON();
     this.$el.find(":input").prop("disabled", true);
 
     $.ajax({
@@ -46,7 +46,6 @@
     var inputs = this.$el.find(":input")
     inputs.each(function () {
       if (this.type !== "submit") {
-        console.log(this.type);
         $(this).val("");
       }
     });
@@ -59,7 +58,7 @@
       new $.TweetCompose(this);
     });
   };
-  
+
 })();
 
 $(function() {
