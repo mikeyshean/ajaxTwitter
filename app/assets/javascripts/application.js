@@ -17,3 +17,4 @@
 // = require users_search
 // = require tweet_compose
 // = require infinite_tweets
+// = require underscore

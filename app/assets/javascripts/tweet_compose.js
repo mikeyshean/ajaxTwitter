@@ -49,8 +49,7 @@
   };
 
   $.TweetCompose.prototype.handleSuccess = function (tweet) {
-    var $li = $("<li>" + JSON.stringify(tweet) + "</li>")
-    this.$feed.prepend($li);
+    $("#feed").trigger("custom", [[tweet], "prepend"])
     this.clearInput();
     this.$el.find(":input").prop("disabled", false);
   };
